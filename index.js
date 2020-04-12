@@ -35,7 +35,7 @@ let div = document.getElementById('item')
                 console.log("Response", response.result.items);
                 items = response.result.items;
 
-                const itemsFiltered = items.filter(item => item.snippet.toLevelComment.snippet.likeCount > 0)
+                const itemsFiltered = items.filter(item => item.snippet.topLevelComment.snippet.likeCount > 0)
 
                 itemsFiltered.forEach(item => {
                   div.innerHTML += `
