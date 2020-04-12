@@ -6,6 +6,8 @@
 
 var items = [];
 let div = document.getElementById('item')
+let pageToken = ""
+
 
 
 
@@ -24,20 +26,19 @@ let div = document.getElementById('item')
 
   function execute() {
     return gapi.client.youtube.commentThreads.list({
-      "part": "snippet",
-      // "id": "a",
-      "maxResults": 100,
-      // "pageToken": "a",
+      "part": "snippet,replies",
+      "maxResults": 20,
+      "pageToken": pageToken,
       "videoId": "NmYGsP0Flhw",
-      // "alt": "json",
-      "fields": "items(snippet/topLevelComment/snippet(authorDisplayName,textDisplay,likeCount))"
+      "fields": "nextPageToken,pageInfo,items(snippet(totalReplyCount,topLevelComment/snippet(authorDisplayName,textDisplay,likeCount)))"
     })
         .then(function(response) {
                 // Handle the results here (response.result has the parsed body).
-                console.log("Response", response.result);
+                console.log("Response", response);
                 items = response.result.items;
 
-                const itemsFiltered = items.filter(item => item.snippet.topLevelComment.snippet.likeCount > 0)
+                const itemsFiltered = items.filter(item => item.snippet.topLevelComment.snippet.likeCount > 150 && item.snippet.totalReplyCount > 0)
+                pageToken = response.result.nextPageToken ? response.result.nextPageToken : ''
 
                 itemsFiltered.forEach(item => {
                   div.innerHTML += `
@@ -48,10 +49,19 @@ let div = document.getElementById('item')
                     <br>
                     Likes: ${item.snippet.topLevelComment.snippet.likeCount}
                     <br>
+                    Comentários: ${item.snippet.totalReplyCount}
+                    <br>
                   `
                 });
               },
               function(err) { console.error("Execute error", err); });
   }
+
   gapi.load("client");
+
+    async function loopExecute() {
+      do {
+        await execute()
+      } while (pageToken.length > 0)
+    }
 

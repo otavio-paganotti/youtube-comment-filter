@@ -1,15 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
     <head>
-        <script src="https://apis.google.com/js/api.js"></script>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <!-- <meta charset="UTF-8" /> -->
+        <title>You Tube Comments Filter</title>
+        <link rel="stylesheet" type="text/css" href="./semantic/dist/semantic.min.css">
     </head>
     
     <body>
         <button onclick="loadClient()">load</button>
-        <button onclick="execute()">execute</button>
-
+        <button onclick="loopExecute()">execute</button>
+        
         <div id="item"></div>
 
+        <script src="https://apis.google.com/js/api.js"></script>
+        <script
+            src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous">
+        </script>
+        <script src="./semantic/dist/semantic.min.js"></script>
         <script src="./index.js"></script>
     </body>
 </html>
