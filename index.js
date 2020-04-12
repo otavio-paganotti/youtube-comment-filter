@@ -28,11 +28,13 @@ let div = document.getElementById('item')
       // "id": "a",
       "maxResults": 100,
       // "pageToken": "a",
-      "videoId": "NmYGsP0Flhw"
+      "videoId": "NmYGsP0Flhw",
+      // "alt": "json",
+      "fields": "items(snippet/topLevelComment/snippet(authorDisplayName,textDisplay,likeCount))"
     })
         .then(function(response) {
                 // Handle the results here (response.result has the parsed body).
-                console.log("Response", response.result.items);
+                console.log("Response", response.result);
                 items = response.result.items;
 
                 const itemsFiltered = items.filter(item => item.snippet.topLevelComment.snippet.likeCount > 0)
@@ -42,7 +44,7 @@ let div = document.getElementById('item')
                     <br>
                     Autor do comentário: ${item.snippet.topLevelComment.snippet.authorDisplayName}
                     <br>
-                    Texto: ${item.snippet.topLevelComment.snippet.textOriginal}
+                    Texto: ${item.snippet.topLevelComment.snippet.textDisplay}
                     <br>
                     Likes: ${item.snippet.topLevelComment.snippet.likeCount}
                     <br>
